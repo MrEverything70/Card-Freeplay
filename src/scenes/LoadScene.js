@@ -10,11 +10,11 @@ export class LoadScene extends Phaser.Scene{
 
     preload() {
         this.load.image("cardback", "./sprites/cardback.jpg");
+        this.load.image("bg", "./sprites/cfbackground.jpg");
+        this.load.image("db", "./sprites/AddDeck.png")
     }
 
     create() {
         this.scene.start(CST.SCENES.MENU, "hey from Load");
-
-        
     }
 }

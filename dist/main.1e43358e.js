@@ -170,8 +170,62 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }, {
     key: "create",
     value: function create() {
-      this.add.image(0, 0, "cardback").setOrigin(0);
+      var _this = this;
+      var bg = this.add.image(0, 0, "bg");
+      bg.setOrigin(0);
+      var message = "hi";
+      var deckButton = this.add.image(110, 600, "db");
+      deckButton.name = "DNT"; //we use the DNT name tag to let the game know which buttons not to touch
+      deckButton.setInteractive().on("pointerdown", function () {
+        return _this.createDeck();
+      });
+      deckButton.on("pointerup", function () {
+        return _this.saySomething("released");
+      });
+      this.input.on('pointerdown', this.startDrag, this);
     }
+  }, {
+    key: "saySomething",
+    value: function saySomething(message) {
+      console.log(message);
+    } //test method
+  }, {
+    key: "createDeck",
+    value: function createDeck() {
+      var cards = [];
+      for (var i = 0; i < 54; i++) {
+        cards[i] = this.add.sprite(100, 200, "cardback");
+        cards[i].displayWidth = 200;
+        cards[i].scaleY = cards[i].scaleX;
+        cards[i].setInteractive();
+      }
+    }
+  }, {
+    key: "startDrag",
+    value: function startDrag(pointer, targets) {
+      this.input.off('pointerdown', this.startDrag, this);
+      this.dragObj = targets[0];
+      this.input.on('pointermove', this.doDrag, this);
+      this.input.on('pointerup', this.stopDrag, this);
+    }
+  }, {
+    key: "doDrag",
+    value: function doDrag(pointer) {
+      if (typeof this.dragObj !== "undefined" && this.dragObj.name !== "DNT") {
+        this.dragObj.x = pointer.x;
+        this.dragObj.y = pointer.y;
+      }
+    }
+  }, {
+    key: "stopDrag",
+    value: function stopDrag() {
+      this.input.on('pointerdown', this.startDrag, this);
+      this.input.off('pointermove', this.doDrag, this);
+      this.input.off('pointerup', this.stopDrag, this);
+    }
+  }, {
+    key: "update",
+    value: function update() {}
   }]);
   return MenuScene;
 }(Phaser.Scene);
@@ -210,6 +264,8 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
     key: "preload",
     value: function preload() {
       this.load.image("cardback", "./sprites/cardback.jpg");
+      this.load.image("bg", "./sprites/cfbackground.jpg");
+      this.load.image("db", "./sprites/AddDeck.png");
     }
   }, {
     key: "create",
@@ -227,8 +283,8 @@ var _MenuScene = require("./scenes/MenuScene");
 /** @type {import("../typings/phaser")} */
 
 var game = new Phaser.Game({
-  width: 1600,
-  height: 900,
+  width: 1920,
+  height: 1080,
   scene: [_LoadScene.LoadScene, _MenuScene.MenuScene]
 });
 },{"./scenes/LoadScene":"src/scenes/LoadScene.js","./scenes/MenuScene":"src/scenes/MenuScene.js"}],"C:/Users/Sachi/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -256,7 +312,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60171" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50461" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

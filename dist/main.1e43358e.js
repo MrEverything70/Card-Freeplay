@@ -165,7 +165,6 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
     key: "init",
     value: function init(data) {
       console.log(data);
-      console.log("got data");
     }
   }, {
     key: "create",
@@ -173,13 +172,35 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       var _this = this;
       var bg = this.add.image(0, 0, "bg");
       bg.setOrigin(0);
+      var tab = this.add.image(-500, 0, "tab");
+      tab.name;
+      var backButton = this.add.image(-500, 0, "back");
+      backButton.name;
+      backButton.setInteractive().on("pointerdown", function () {
+        return _this.removeTab(editButton, tab, backButton, deckButton, holderButton);
+      });
+      var editButton = this.add.image(150, 600, "edit");
+      editButton.name;
+      editButton.setInteractive().on("pointerdown", function () {
+        return _this.sendTab(editButton, tab, backButton, deckButton, holderButton);
+      });
       var message = "hi";
-      var deckButton = this.add.image(110, 600, "db");
-      deckButton.name = "DNT"; //we use the DNT name tag to let the game know which buttons not to touch
+      var cards = [];
+      var holder;
+      var deckButton = this.add.image(-500, 0, "db");
+      deckButton.name;
       deckButton.setInteractive().on("pointerdown", function () {
-        return _this.createDeck();
+        return _this.createDeck(cards);
       });
       deckButton.on("pointerup", function () {
+        return _this.saySomething("released");
+      });
+      var holderButton = this.add.image(-500, 0, "hb");
+      holderButton.name;
+      holderButton.setInteractive().on("pointerdown", function () {
+        return _this.createHolder(holder);
+      });
+      holderButton.on("pointerup", function () {
         return _this.saySomething("released");
       });
       this.input.on('pointerdown', this.startDrag, this);
@@ -190,28 +211,65 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       console.log(message);
     } //test method
   }, {
+    key: "sendTab",
+    value: function sendTab(editButton, tab, backButton, deckButton, holderButton) {
+      editButton.setPosition(-100, 600);
+      tab.setPosition(250, 540);
+      backButton.setPosition(150, 800);
+      deckButton.setPosition(160, 400);
+      holderButton.setPosition(160, 300);
+    }
+  }, {
+    key: "removeTab",
+    value: function removeTab(editButton, tab, backButton, deckButton, holderButton) {
+      editButton.setPosition(150, 600);
+      tab.setPosition(-500, 0);
+      backButton.setPosition(-500, 0);
+      deckButton.setPosition(-500, 0);
+      holderButton.setPosition(-500, 0);
+    }
+  }, {
     key: "createDeck",
-    value: function createDeck() {
-      var cards = [];
+    value: function createDeck(cards) {
       for (var i = 0; i < 54; i++) {
-        cards[i] = this.add.sprite(100, 200, "cardback");
+        cards[i] = this.add.sprite(1000, 400, "cardback");
         cards[i].displayWidth = 200;
         cards[i].scaleY = cards[i].scaleX;
         cards[i].setInteractive();
+        cards[i].name = "DD";
+        this.input.on("pointerdown", this.flipCard, this);
       }
+    }
+  }, {
+    key: "flipCard",
+    value: function flipCard(pointer, targets) {
+      if (pointer.rightButtonDown()) {
+        console.log("Flip the card!");
+      }
+    }
+  }, {
+    key: "createHolder",
+    value: function createHolder(holder) {
+      holder = this.add.image(1300, 400, "holder");
+      holder.displayWidth = 210;
+      holder.scaleY = holder.scaleX;
+      holder.setInteractive();
+      holder.name = "DD";
     }
   }, {
     key: "startDrag",
     value: function startDrag(pointer, targets) {
-      this.input.off('pointerdown', this.startDrag, this);
-      this.dragObj = targets[0];
-      this.input.on('pointermove', this.doDrag, this);
-      this.input.on('pointerup', this.stopDrag, this);
+      if (pointer.leftButtonDown()) {
+        this.input.off('pointerdown', this.startDrag, this);
+        this.dragObj = targets[0];
+        this.input.on('pointermove', this.doDrag, this);
+        this.input.on('pointerup', this.stopDrag, this);
+      }
     }
   }, {
     key: "doDrag",
     value: function doDrag(pointer) {
-      if (typeof this.dragObj !== "undefined" && this.dragObj.name !== "DNT") {
+      if (typeof this.dragObj !== "undefined" && this.dragObj.name == "DD") {
         this.dragObj.x = pointer.x;
         this.dragObj.y = pointer.y;
       }
@@ -223,9 +281,6 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.input.off('pointermove', this.doDrag, this);
       this.input.off('pointerup', this.stopDrag, this);
     }
-  }, {
-    key: "update",
-    value: function update() {}
   }]);
   return MenuScene;
 }(Phaser.Scene);
@@ -266,11 +321,17 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.image("cardback", "./sprites/cardback.jpg");
       this.load.image("bg", "./sprites/cfbackground.jpg");
       this.load.image("db", "./sprites/AddDeck.png");
+      this.load.image("tab", "./sprites/Tab.png");
+      this.load.image("edit", "./sprites/Edit.png");
+      this.load.image("back", "./sprites/Back.png");
+      this.load.image("hb", "./sprites/AddHolder.png");
+      this.load.image("holder", "./sprites/Holder.png");
     }
   }, {
     key: "create",
     value: function create() {
-      this.scene.start(_CST.CST.SCENES.MENU, "hey from Load");
+      this.add.text(1000, 600, "Loading...");
+      this.scene.start(_CST.CST.SCENES.MENU);
     }
   }]);
   return LoadScene;
@@ -312,7 +373,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50461" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65386" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

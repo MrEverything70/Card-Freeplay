@@ -130,6 +130,71 @@ var CST = exports.CST = {
     MENU: "MENU"
   }
 };
+},{}],"src/Card.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Card = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Card = exports.Card = /*#__PURE__*/_createClass(function Card(scene, num) {
+  _classCallCheck(this, Card);
+  this.render = function (x, y) {
+    var card = scene.add.sprite(x, y, "cardback");
+    card.displayWidth = 200;
+    card.scaleY = card.scaleX;
+    card.name = "card";
+    card.setInteractive();
+    scene.input.setDraggable(card);
+    scene.input.on("pointerdown", function (pointer, targets) {
+      if (pointer.rightButtonDown() && targets[0].name == "card" && targets[0] !== "undefined") {
+        console.log("1");
+        switch (num) {
+          case 52:
+            card.setTexture("sq");
+            break;
+          case 53:
+            card.setTexture("ha");
+            break;
+        }
+      }
+    }, scene);
+  };
+});
+},{}],"src/Holder.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Holder = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Holder = exports.Holder = /*#__PURE__*/_createClass(function Holder(scene) {
+  _classCallCheck(this, Holder);
+  this.render = function (x, y) {
+    var holder = scene.add.image(x, y, "holder");
+    holder.displayWidth = 210;
+    holder.scaleY = holder.scaleX;
+    holder.setInteractive();
+    var dropZone = scene.add.zone(x, y, 770, 1070).setRectangleDropZone(770, 1070);
+    dropZone.setData({
+      "cards": 0,
+      "name": "h"
+    });
+    return dropZone;
+  };
+});
 },{}],"src/scenes/MenuScene.js":[function(require,module,exports) {
 "use strict";
 
@@ -139,6 +204,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.MenuScene = void 0;
 var _CST = require("../CST");
 var _LoadScene = require("./LoadScene");
+var _Card = require("../Card");
+var _Holder = require("../Holder");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -156,10 +223,14 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   _inherits(MenuScene, _Phaser$Scene);
   var _super = _createSuper(MenuScene);
   function MenuScene() {
+    var _this;
     _classCallCheck(this, MenuScene);
-    return _super.call(this, {
+    _this = _super.call(this, {
       key: _CST.CST.SCENES.MENU
     });
+    _this.cards = new Array(_Card.Card);
+    _this.holders = new _Holder.Holder();
+    return _this;
   }
   _createClass(MenuScene, [{
     key: "init",
@@ -169,7 +240,8 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }, {
     key: "create",
     value: function create() {
-      var _this = this;
+      var _this2 = this;
+      this.input.mouse.disableContextMenu();
       var bg = this.add.image(0, 0, "bg");
       bg.setOrigin(0);
       var tab = this.add.image(-500, 0, "tab");
@@ -177,33 +249,44 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       var backButton = this.add.image(-500, 0, "back");
       backButton.name;
       backButton.setInteractive().on("pointerdown", function () {
-        return _this.removeTab(editButton, tab, backButton, deckButton, holderButton);
+        return _this2.removeTab(editButton, tab, backButton, deckButton, holderButton);
       });
       var editButton = this.add.image(150, 600, "edit");
       editButton.name;
       editButton.setInteractive().on("pointerdown", function () {
-        return _this.sendTab(editButton, tab, backButton, deckButton, holderButton);
+        return _this2.sendTab(editButton, tab, backButton, deckButton, holderButton);
       });
       var message = "hi";
-      var cards = [];
-      var holder;
       var deckButton = this.add.image(-500, 0, "db");
       deckButton.name;
       deckButton.setInteractive().on("pointerdown", function () {
-        return _this.createDeck(cards);
+        return _this2.createDeck();
       });
       deckButton.on("pointerup", function () {
-        return _this.saySomething("released");
+        return _this2.saySomething("released");
       });
       var holderButton = this.add.image(-500, 0, "hb");
       holderButton.name;
       holderButton.setInteractive().on("pointerdown", function () {
-        return _this.createHolder(holder);
+        return _this2.createHolder();
       });
       holderButton.on("pointerup", function () {
-        return _this.saySomething("released");
+        return _this2.saySomething("released");
       });
-      this.input.on('pointerdown', this.startDrag, this);
+
+      //this.input.on('pointerdown', this.startDrag, this);
+
+      this.input.on("dragstart", function (pointer, gameObject) {
+        this.children.bringToTop(gameObject);
+      }, this);
+      this.input.on("drag", function (pointer, gameObject) {
+        gameObject.x = pointer.x;
+        gameObject.y = pointer.y;
+      });
+      this.input.on("drop", function (pointer, gameObject, dropZone) {
+        gameObject.x = dropZone.x;
+        gameObject.y = dropZone.y;
+      });
     }
   }, {
     key: "saySomething",
@@ -230,14 +313,10 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
     }
   }, {
     key: "createDeck",
-    value: function createDeck(cards) {
+    value: function createDeck() {
       for (var i = 0; i < 54; i++) {
-        cards[i] = this.add.sprite(1000, 400, "cardback");
-        cards[i].displayWidth = 200;
-        cards[i].scaleY = cards[i].scaleX;
-        cards[i].setInteractive();
-        cards[i].name = "DD";
-        this.input.on("pointerdown", this.flipCard, this);
+        this.cards[i] = new _Card.Card(this, i);
+        this.cards[i].render(1000, 500);
       }
     }
   }, {
@@ -249,12 +328,10 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
     }
   }, {
     key: "createHolder",
-    value: function createHolder(holder) {
-      holder = this.add.image(1300, 400, "holder");
-      holder.displayWidth = 210;
-      holder.scaleY = holder.scaleX;
-      holder.setInteractive();
-      holder.name = "DD";
+    value: function createHolder() {
+      this.holder = new _Holder.Holder(this);
+      this.holder.render(1500, 500);
+      this.holder.name = "DD";
     }
   }, {
     key: "startDrag",
@@ -284,7 +361,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return MenuScene;
 }(Phaser.Scene);
-},{"../CST":"src/CST.js","./LoadScene":"src/scenes/LoadScene.js"}],"src/scenes/LoadScene.js":[function(require,module,exports) {
+},{"../CST":"src/CST.js","./LoadScene":"src/scenes/LoadScene.js","../Card":"src/Card.js","../Holder":"src/Holder.js"}],"src/scenes/LoadScene.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -326,6 +403,8 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.image("back", "./sprites/Back.png");
       this.load.image("hb", "./sprites/AddHolder.png");
       this.load.image("holder", "./sprites/Holder.png");
+      this.load.image("ha", "./sprites/cardFronts/HA.png");
+      this.load.image("sq", "./sprites/cardFronts/SQ.png");
     }
   }, {
     key: "create",
@@ -373,7 +452,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65386" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54119" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

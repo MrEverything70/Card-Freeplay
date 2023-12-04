@@ -17,6 +17,9 @@ export class LoadScene extends Phaser.Scene{
         this.load.image("back", "./sprites/Back.png");
         this.load.image("hb", "./sprites/AddHolder.png");
         this.load.image("holder", "./sprites/Holder.png");
+
+        this.load.image("ha", "./sprites/cardFronts/HA.png");
+        this.load.image("sq", "./sprites/cardFronts/SQ.png");
     }
 
     create() {

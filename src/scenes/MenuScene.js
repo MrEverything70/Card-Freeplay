@@ -1,11 +1,15 @@
 import {CST} from "../CST";
 import {LoadScene} from "./LoadScene";
+import {Card} from "../Card";
+import {Holder} from "../Holder";
 
 export class MenuScene extends Phaser.Scene{
     constructor(){
         super({ 
             key: CST.SCENES.MENU 
         })
+        this.cards = new Array(Card);
+        this.holders = new Holder;
     }
 
     init(data) {
@@ -13,6 +17,8 @@ export class MenuScene extends Phaser.Scene{
     }
     
     create() {
+        this.input.mouse.disableContextMenu();
+
         var bg = this.add.image(0,0, "bg");
         bg.setOrigin(0);
 
@@ -28,21 +34,33 @@ export class MenuScene extends Phaser.Scene{
         editButton.setInteractive().on("pointerdown", () => this.sendTab(editButton, tab, backButton, deckButton, holderButton) );
 
         var message = "hi";
-
-        var cards = [];
-        var holder;
         
         var deckButton = this.add.image(-500, 0, "db");
         deckButton.name; 
-        deckButton.setInteractive().on("pointerdown", () => this.createDeck(cards) );
+        deckButton.setInteractive().on("pointerdown", () => this.createDeck() );
         deckButton.on("pointerup", () => this.saySomething("released") );
         
         var holderButton = this.add.image(-500, 0, "hb");
         holderButton.name;
-        holderButton.setInteractive().on("pointerdown", () => this.createHolder(holder) );
+        holderButton.setInteractive().on("pointerdown", () => this.createHolder() );
         holderButton.on("pointerup", () => this.saySomething("released") );
 
-        this.input.on('pointerdown', this.startDrag, this);
+        //this.input.on('pointerdown', this.startDrag, this);
+
+        this.input.on("dragstart", function (pointer, gameObject) {
+            this.children.bringToTop(gameObject);
+            
+        }, this);
+        
+        this.input.on("drag", (pointer, gameObject) => {
+            gameObject.x = pointer.x;
+            gameObject.y = pointer.y;
+        });
+
+        this.input.on("drop", (pointer, gameObject, dropZone) => {
+            gameObject.x = dropZone.x;
+            gameObject.y = dropZone.y;
+        });
     }
 
     saySomething(message) { console.log(message); } //test method
@@ -63,15 +81,10 @@ export class MenuScene extends Phaser.Scene{
         holderButton.setPosition(-500, 0);
     }
 
-    createDeck(cards) {
+    createDeck() {
         for(let i=0; i<54; i++) {
-            cards[i] = this.add.sprite(1000,400, "cardback");
-            cards[i].displayWidth = 200;
-            cards[i].scaleY = cards[i].scaleX;
-            cards[i].setInteractive();
-            cards[i].name = "DD";
-
-            this.input.on("pointerdown", this.flipCard, this);
+            this.cards[i] = new Card(this, i);
+            this.cards[i].render(1000, 500);
         }
     }
 
@@ -81,12 +94,10 @@ export class MenuScene extends Phaser.Scene{
         }
     }
 
-    createHolder(holder) {
-        holder = this.add.image(1300, 400, "holder");
-        holder.displayWidth = 210;
-        holder.scaleY = holder.scaleX;
-        holder.setInteractive();
-        holder.name = "DD";
+    createHolder() {
+        this.holder = new Holder(this);
+        this.holder.render(1500, 500);
+        this.holder.name = "DD";
     }
 
     startDrag(pointer, targets){

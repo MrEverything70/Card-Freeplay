@@ -145,26 +145,193 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 var Card = exports.Card = /*#__PURE__*/_createClass(function Card(scene, num) {
   _classCallCheck(this, Card);
-  this.render = function (x, y) {
-    var card = scene.add.sprite(x, y, "cardback");
+  var card;
+  this.render = function (x, y, isFlip) {
+    if (card != undefined) {
+      console.log("Hey");
+      card.destroy();
+    }
+    if (isFlip == 1) {
+      switch (num) {
+        case 0:
+          card = scene.add.sprite(x, y, "j");
+          break;
+        case 1:
+          card = scene.add.sprite(x, y, "j");
+          break;
+        case 2:
+          card = scene.add.sprite(x, y, "da");
+          break;
+        case 3:
+          card = scene.add.sprite(x, y, "dk");
+          break;
+        case 4:
+          card = scene.add.sprite(x, y, "dq");
+          break;
+        case 5:
+          card = scene.add.sprite(x, y, "dj");
+          break;
+        case 6:
+          card = scene.add.sprite(x, y, "d10");
+          break;
+        case 7:
+          card = scene.add.sprite(x, y, "d9");
+          break;
+        case 8:
+          card = scene.add.sprite(x, y, "d8");
+          break;
+        case 9:
+          card = scene.add.sprite(x, y, "d7");
+          break;
+        case 10:
+          card = scene.add.sprite(x, y, "d6");
+          break;
+        case 11:
+          card = scene.add.sprite(x, y, "d5");
+          break;
+        case 12:
+          card = scene.add.sprite(x, y, "d4");
+          break;
+        case 13:
+          card = scene.add.sprite(x, y, "d3");
+          break;
+        case 19:
+          card = scene.add.sprite(x, y, "d2");
+          break;
+        case 14:
+          card = scene.add.sprite(x, y, "sa");
+          break;
+        case 15:
+          card = scene.add.sprite(x, y, "sk");
+          break;
+        case 16:
+          card = scene.add.sprite(x, y, "sq");
+          break;
+        case 17:
+          card = scene.add.sprite(x, y, "sj");
+          break;
+        case 18:
+          card = scene.add.sprite(x, y, "s10");
+          break;
+        case 19:
+          card = scene.add.sprite(x, y, "s9");
+          break;
+        case 20:
+          card = scene.add.sprite(x, y, "s8");
+          break;
+        case 21:
+          card = scene.add.sprite(x, y, "s7");
+          break;
+        case 22:
+          card = scene.add.sprite(x, y, "s6");
+          break;
+        case 24:
+          card = scene.add.sprite(x, y, "s5");
+          break;
+        case 25:
+          card = scene.add.sprite(x, y, "s4");
+          break;
+        case 26:
+          card = scene.add.sprite(x, y, "s3");
+          break;
+        case 27:
+          card = scene.add.sprite(x, y, "s2");
+          break;
+        case 28:
+          card = scene.add.sprite(x, y, "ha");
+          break;
+        case 29:
+          card = scene.add.sprite(x, y, "hk");
+          break;
+        case 30:
+          card = scene.add.sprite(x, y, "hq");
+          break;
+        case 31:
+          card = scene.add.sprite(x, y, "hj");
+          break;
+        case 32:
+          card = scene.add.sprite(x, y, "h10");
+          break;
+        case 33:
+          card = scene.add.sprite(x, y, "h9");
+          break;
+        case 34:
+          card = scene.add.sprite(x, y, "h8");
+          break;
+        case 35:
+          card = scene.add.sprite(x, y, "h7");
+          break;
+        case 36:
+          card = scene.add.sprite(x, y, "h6");
+          break;
+        case 37:
+          card = scene.add.sprite(x, y, "h5");
+          break;
+        case 38:
+          card = scene.add.sprite(x, y, "h4");
+          break;
+        case 39:
+          card = scene.add.sprite(x, y, "h3");
+          break;
+        case 40:
+          card = scene.add.sprite(x, y, "h2");
+          break;
+        case 41:
+          card = scene.add.sprite(x, y, "ca");
+          break;
+        case 42:
+          card = scene.add.sprite(x, y, "ck");
+          break;
+        case 43:
+          card = scene.add.sprite(x, y, "cq");
+          break;
+        case 44:
+          card = scene.add.sprite(x, y, "cj");
+          break;
+        case 45:
+          card = scene.add.sprite(x, y, "c10");
+          break;
+        case 46:
+          card = scene.add.sprite(x, y, "c9");
+          break;
+        case 47:
+          card = scene.add.sprite(x, y, "c8");
+          break;
+        case 48:
+          card = scene.add.sprite(x, y, "c7");
+          break;
+        case 49:
+          card = scene.add.sprite(x, y, "c6");
+          break;
+        case 50:
+          card = scene.add.sprite(x, y, "c5");
+          break;
+        case 51:
+          card = scene.add.sprite(x, y, "c4");
+          break;
+        case 52:
+          card = scene.add.sprite(x, y, "c3");
+          break;
+        case 53:
+          card = scene.add.sprite(x, y, "c2");
+          break;
+        default:
+          card = scene.add.sprite(x, y, "cardback");
+          break;
+      }
+      //console.log("true");
+    } else {
+      card = scene.add.sprite(x, y, "cardback");
+      //console.log("false");
+    }
+
     card.displayWidth = 200;
     card.scaleY = card.scaleX;
     card.name = "card";
+    card.num = num;
+    card.flip = isFlip;
     card.setInteractive();
     scene.input.setDraggable(card);
-    scene.input.on("pointerdown", function (pointer, targets) {
-      if (pointer.rightButtonDown() && targets[0].name == "card" && targets[0] !== "undefined") {
-        console.log("1");
-        switch (num) {
-          case 52:
-            card.setTexture("sq");
-            break;
-          case 53:
-            card.setTexture("ha");
-            break;
-        }
-      }
-    }, scene);
   };
 });
 },{}],"src/Holder.js":[function(require,module,exports) {
@@ -195,6 +362,61 @@ var Holder = exports.Holder = /*#__PURE__*/_createClass(function Holder(scene) {
     return dropZone;
   };
 });
+},{}],"src/Chip.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Chip = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Chip = exports.Chip = /*#__PURE__*/_createClass(function Chip(scene) {
+  _classCallCheck(this, Chip);
+  var chip;
+  this.render = function (x, y, color) {
+    switch (color) {
+      case 1:
+        chip = scene.add.image(x, y, "pb");
+        break;
+      case 2:
+        chip = scene.add.image(x, y, "pbl");
+        break;
+      case 3:
+        chip = scene.add.image(x, y, "pg");
+        break;
+      case 4:
+        chip = scene.add.image(x, y, "pgr");
+        break;
+      case 5:
+        chip = scene.add.image(x, y, "plb");
+        break;
+      case 6:
+        chip = scene.add.image(x, y, "po");
+        break;
+      case 7:
+        chip = scene.add.image(x, y, "pp");
+        break;
+      case 8:
+        chip = scene.add.image(x, y, "pr");
+        break;
+      case 9:
+        chip = scene.add.image(x, y, "py");
+        break;
+      default:
+        chip = scene.add.image(x, y, "pb");
+        break;
+    }
+    chip.displayWidth = 110;
+    chip.scaleY = chip.scaleX;
+    chip.setInteractive();
+    scene.input.setDraggable(chip);
+  };
+});
 },{}],"src/scenes/MenuScene.js":[function(require,module,exports) {
 "use strict";
 
@@ -206,6 +428,7 @@ var _CST = require("../CST");
 var _LoadScene = require("./LoadScene");
 var _Card = require("../Card");
 var _Holder = require("../Holder");
+var _Chip = require("../Chip");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -230,6 +453,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
     });
     _this.cards = new Array(_Card.Card);
     _this.holders = new _Holder.Holder();
+    _this.chips = new _Chip.Chip();
     return _this;
   }
   _createClass(MenuScene, [{
@@ -249,12 +473,12 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       var backButton = this.add.image(-500, 0, "back");
       backButton.name;
       backButton.setInteractive().on("pointerdown", function () {
-        return _this2.removeTab(editButton, tab, backButton, deckButton, holderButton);
+        return _this2.removeTab(editButton, tab, backButton, deckButton, holderButton, chipButton);
       });
       var editButton = this.add.image(150, 600, "edit");
       editButton.name;
       editButton.setInteractive().on("pointerdown", function () {
-        return _this2.sendTab(editButton, tab, backButton, deckButton, holderButton);
+        return _this2.sendTab(editButton, tab, backButton, deckButton, holderButton, chipButton);
       });
       var message = "hi";
       var deckButton = this.add.image(-500, 0, "db");
@@ -273,9 +497,22 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       holderButton.on("pointerup", function () {
         return _this2.saySomething("released");
       });
-
-      //this.input.on('pointerdown', this.startDrag, this);
-
+      var chipButton = this.add.image(-500, 0, "cb");
+      chipButton.name;
+      chipButton.setInteractive().on("pointerdown", function () {
+        return _this2.sendChipTab(cbg, pbb);
+      });
+      chipButton.on("pointerup", function () {
+        return _this2.saySomething("released");
+      });
+      var cbg = this.add.image(-2000, 0, "sb");
+      cbg.name;
+      var pbb = this.add.image(-500, 0, "pb");
+      pbb.name;
+      pbb.setInteractive().on("pointerdown", function () {
+        return _this2.removeChipTab(cbg, pbb, 1);
+      });
+      this.input.on('pointerdown', this.startDrag, this);
       this.input.on("dragstart", function (pointer, gameObject) {
         this.children.bringToTop(gameObject);
       }, this);
@@ -287,6 +524,24 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
         gameObject.x = dropZone.x;
         gameObject.y = dropZone.y;
       });
+      this.input.on("gameobjectdown", function (pointer, gameObject) {
+        _this2.flipCard(pointer, gameObject);
+      });
+    }
+  }, {
+    key: "flipCard",
+    value: function flipCard(pointer, gameObject) {
+      if (pointer.rightButtonDown() && gameObject.name == "card" && gameObject !== "undefined") {
+        var num = gameObject.num;
+        var flipState = gameObject.flip;
+        gameObject.destroy();
+        this.cards[num] = new _Card.Card(this, num);
+        if (flipState == 0) {
+          this.cards[num].render(pointer.x, pointer.y, 1);
+        } else {
+          this.cards[num].render(pointer.x, pointer.y, 0);
+        }
+      }
     }
   }, {
     key: "saySomething",
@@ -295,36 +550,48 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
     } //test method
   }, {
     key: "sendTab",
-    value: function sendTab(editButton, tab, backButton, deckButton, holderButton) {
+    value: function sendTab(editButton, tab, backButton, deckButton, holderButton, chipButton) {
       editButton.setPosition(-100, 600);
       tab.setPosition(250, 540);
       backButton.setPosition(150, 800);
       deckButton.setPosition(160, 400);
       holderButton.setPosition(160, 300);
+      chipButton.setPosition(160, 200);
     }
   }, {
     key: "removeTab",
-    value: function removeTab(editButton, tab, backButton, deckButton, holderButton) {
+    value: function removeTab(editButton, tab, backButton, deckButton, holderButton, chipButton) {
       editButton.setPosition(150, 600);
       tab.setPosition(-500, 0);
       backButton.setPosition(-500, 0);
       deckButton.setPosition(-500, 0);
       holderButton.setPosition(-500, 0);
+      chipButton.setPosition(-500, 0);
     }
   }, {
     key: "createDeck",
     value: function createDeck() {
       for (var i = 0; i < 54; i++) {
         this.cards[i] = new _Card.Card(this, i);
-        this.cards[i].render(1000, 500);
+        this.cards[i].num = i; //creates array
+      }
+
+      this.shuffle(this.cards);
+      console.log(this.cards);
+      for (var _i = 0; _i < 54; _i++) {
+        this.cards[_i].render(1000, 500, 0); //renders all cards
       }
     }
   }, {
-    key: "flipCard",
-    value: function flipCard(pointer, targets) {
-      if (pointer.rightButtonDown()) {
-        console.log("Flip the card!");
+    key: "shuffle",
+    value: function shuffle(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var _ref = [array[j], array[i]];
+        array[i] = _ref[0];
+        array[j] = _ref[1];
       }
+      return array;
     }
   }, {
     key: "createHolder",
@@ -332,6 +599,23 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.holder = new _Holder.Holder(this);
       this.holder.render(1500, 500);
       this.holder.name = "DD";
+    }
+  }, {
+    key: "sendChipTab",
+    value: function sendChipTab(cbg, pp) {
+      cbg.setPosition(1000, 500);
+      pp.setPosition(1000, 500);
+      this.chldren.bringtoTop(pp);
+      this.children.bringToTop(cbg);
+    }
+  }, {
+    key: "removeChipTab",
+    value: function removeChipTab(cbg, pp, val) {
+      cbg.setPosition(-2000, 0);
+      pp.setPosition(-500, 0);
+      this.chips = new _Chip.Chip(this, val);
+      this.chips.render(700, 500);
+      this.chips.name = "DD";
     }
   }, {
     key: "startDrag",
@@ -361,7 +645,7 @@ var MenuScene = exports.MenuScene = /*#__PURE__*/function (_Phaser$Scene) {
   }]);
   return MenuScene;
 }(Phaser.Scene);
-},{"../CST":"src/CST.js","./LoadScene":"src/scenes/LoadScene.js","../Card":"src/Card.js","../Holder":"src/Holder.js"}],"src/scenes/LoadScene.js":[function(require,module,exports) {
+},{"../CST":"src/CST.js","./LoadScene":"src/scenes/LoadScene.js","../Card":"src/Card.js","../Holder":"src/Holder.js","../Chip":"src/Chip.js"}],"src/scenes/LoadScene.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -403,8 +687,70 @@ var LoadScene = exports.LoadScene = /*#__PURE__*/function (_Phaser$Scene) {
       this.load.image("back", "./sprites/Back.png");
       this.load.image("hb", "./sprites/AddHolder.png");
       this.load.image("holder", "./sprites/Holder.png");
+      this.load.image("cb", "./sprites/AddChip.png");
+      this.load.image("sb", "./sprites/SelectBG.png");
+      this.load.image("c2", "./sprites/cardFronts/C2.png");
+      this.load.image("c3", "./sprites/cardFronts/C3.png");
+      this.load.image("c4", "./sprites/cardFronts/C4.png");
+      this.load.image("c5", "./sprites/cardFronts/C5.png");
+      this.load.image("c6", "./sprites/cardFronts/C6.png");
+      this.load.image("c7", "./sprites/cardFronts/C7.png");
+      this.load.image("c8", "./sprites/cardFronts/C8.png");
+      this.load.image("c9", "./sprites/cardFronts/C9.png");
+      this.load.image("c10", "./sprites/cardFronts/C10.png");
+      this.load.image("cj", "./sprites/cardFronts/CJ.png");
+      this.load.image("cq", "./sprites/cardFronts/CQ.png");
+      this.load.image("ck", "./sprites/cardFronts/CK.png");
+      this.load.image("ca", "./sprites/cardFronts/CA.png");
+      this.load.image("h2", "./sprites/cardFronts/H2.png");
+      this.load.image("h3", "./sprites/cardFronts/H3.png");
+      this.load.image("h4", "./sprites/cardFronts/H4.png");
+      this.load.image("h5", "./sprites/cardFronts/H5.png");
+      this.load.image("h6", "./sprites/cardFronts/H6.png");
+      this.load.image("h7", "./sprites/cardFronts/H7.png");
+      this.load.image("h8", "./sprites/cardFronts/H8.png");
+      this.load.image("h9", "./sprites/cardFronts/H9.png");
+      this.load.image("h10", "./sprites/cardFronts/H10.png");
+      this.load.image("hj", "./sprites/cardFronts/HJ.png");
+      this.load.image("hq", "./sprites/cardFronts/HQ.png");
+      this.load.image("hk", "./sprites/cardFronts/HK.png");
       this.load.image("ha", "./sprites/cardFronts/HA.png");
+      this.load.image("s2", "./sprites/cardFronts/S2.png");
+      this.load.image("s3", "./sprites/cardFronts/S3.png");
+      this.load.image("s4", "./sprites/cardFronts/S4.png");
+      this.load.image("s5", "./sprites/cardFronts/S5.png");
+      this.load.image("s6", "./sprites/cardFronts/S6.png");
+      this.load.image("s7", "./sprites/cardFronts/S7.png");
+      this.load.image("s8", "./sprites/cardFronts/S8.png");
+      this.load.image("s9", "./sprites/cardFronts/S9.png");
+      this.load.image("s10", "./sprites/cardFronts/S10.png");
+      this.load.image("sj", "./sprites/cardFronts/SJ.png");
       this.load.image("sq", "./sprites/cardFronts/SQ.png");
+      this.load.image("sk", "./sprites/cardFronts/SK.png");
+      this.load.image("sa", "./sprites/cardFronts/SA.png");
+      this.load.image("d2", "./sprites/cardFronts/D2.png");
+      this.load.image("d3", "./sprites/cardFronts/D3.png");
+      this.load.image("d4", "./sprites/cardFronts/D4.png");
+      this.load.image("d5", "./sprites/cardFronts/D5.png");
+      this.load.image("d6", "./sprites/cardFronts/D6.png");
+      this.load.image("d7", "./sprites/cardFronts/D7.png");
+      this.load.image("d8", "./sprites/cardFronts/D8.png");
+      this.load.image("d9", "./sprites/cardFronts/D9.png");
+      this.load.image("d10", "./sprites/cardFronts/D10.png");
+      this.load.image("dj", "./sprites/cardFronts/DJ.png");
+      this.load.image("dq", "./sprites/cardFronts/DQ.png");
+      this.load.image("dk", "./sprites/cardFronts/DK.png");
+      this.load.image("da", "./sprites/cardFronts/DA.png");
+      this.load.image("j", "./sprites/cardFronts/j.png");
+      this.load.image("pb", "./sprites/pokerChips/pb.png");
+      this.load.image("pbl", "./sprites/pokerChips/pbl.png");
+      this.load.image("pg", "./sprites/pokerChips/pg.png");
+      this.load.image("pgr", "./sprites/pokerChips/pgr.png");
+      this.load.image("plb", "./sprites/pokerChips/plb.png");
+      this.load.image("po", "./sprites/pokerChips/po.png");
+      this.load.image("pp", "./sprites/pokerChips/pp.png");
+      this.load.image("pr", "./sprites/pokerChips/pr.png");
+      this.load.image("py", "./sprites/pokerChips/py.png");
     }
   }, {
     key: "create",
@@ -452,7 +798,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54119" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60029" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

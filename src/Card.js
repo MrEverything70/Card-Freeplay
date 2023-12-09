@@ -1,7 +1,7 @@
 export class Card {
     constructor(scene, num) {
         var card;
-        this.render = (x, y, isFlip) => {
+        this.render = (x, y, isFlip, cont) => {
             if(card != undefined) { console.log("Hey"); card.destroy();  }
 
             if(isFlip == 1) {
@@ -48,34 +48,35 @@ export class Card {
                     case 13:
                         card = scene.add.sprite(x, y, "d3");
                         break;
-                    case 19:
+                    case 14:
                         card = scene.add.sprite(x, y, "d2");
                         break;
-                    case 14:
+                    case 15:
                         card = scene.add.sprite(x, y, "sa");
                         break;
-                    case 15:
+                    case 16:
                         card = scene.add.sprite(x, y, "sk");
                         break;
-                    case 16:
+                    case 17:
                         card = scene.add.sprite(x, y, "sq");
                         break;
-                    case 17:
+                    case 18:
                         card = scene.add.sprite(x, y, "sj");
                         break;
-                    case 18:
+                    case 19:
                         card = scene.add.sprite(x, y, "s10");
                         break;
-                    case 19:
-                        card = scene.add.sprite(x, y, "s9");
-                        break;
                     case 20:
-                        card = scene.add.sprite(x, y, "s8");
+                        card = scene.add.sprite(x, y, "s9");
+                        console.log("Made s9");
                         break;
                     case 21:
-                        card = scene.add.sprite(x, y, "s7");
+                        card = scene.add.sprite(x, y, "s8");
                         break;
                     case 22:
+                        card = scene.add.sprite(x, y, "s7");
+                        break;
+                    case 23:
                         card = scene.add.sprite(x, y, "s6");
                         break;
                     case 24:
@@ -143,9 +144,11 @@ export class Card {
                         break;
                     case 45:
                         card = scene.add.sprite(x, y, "c10");
+                        console.log("made c10");
                         break;
                     case 46:
                         card = scene.add.sprite(x, y, "c9");
+                        console.log("made c9!");
                         break;
                     case 47:
                         card = scene.add.sprite(x, y, "c8");
@@ -172,17 +175,16 @@ export class Card {
                         card = scene.add.sprite(x, y, "cardback");
                         break;
                 }
-                //console.log("true");
             } else {
                 card = scene.add.sprite(x, y, "cardback");
-                //console.log("false");
             }
 
-            card.displayWidth = 200;
+            card.displayWidth = 170;
             card.scaleY = card.scaleX;
             card.name = "card";
             card.num = num;
             card.flip = isFlip;
+            cont.add(card);
 
             card.setInteractive();
             scene.input.setDraggable(card);

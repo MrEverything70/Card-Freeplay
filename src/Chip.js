@@ -1,7 +1,7 @@
 export class Chip {
     constructor(scene) {
         var chip;
-        this.render = (x,y, color) => {
+        this.render = (x,y, color, cont) => {
             switch(color) {
                 case 1:
                     chip = scene.add.image(x, y, "pb");
@@ -37,6 +37,7 @@ export class Chip {
 
             chip.displayWidth = 110;
             chip.scaleY = chip.scaleX;
+            cont.add(chip);
             chip.setInteractive();
             scene.input.setDraggable(chip);
         }

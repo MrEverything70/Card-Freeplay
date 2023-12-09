@@ -1,5 +1,4 @@
 import {CST} from "../CST";
-import {MenuScene} from "./MenuScene";
 
 export class LoadScene extends Phaser.Scene{
     constructor(){
@@ -11,14 +10,18 @@ export class LoadScene extends Phaser.Scene{
     preload() {
         this.load.image("cardback", "./sprites/cardback.jpg");
         this.load.image("bg", "./sprites/cfbackground.jpg");
+        this.load.image("logo", "./sprites/Logo.png");
         this.load.image("db", "./sprites/AddDeck.png")
         this.load.image("tab", "./sprites/Tab.png");
         this.load.image("edit", "./sprites/Edit.png");
         this.load.image("back", "./sprites/Back.png");
         this.load.image("hb", "./sprites/AddHolder.png");
         this.load.image("holder", "./sprites/Holder.png");
+        this.load.image("hs", "./sprites/HolderStats.png");
         this.load.image("cb", "./sprites/AddChip.png");
         this.load.image("sb", "./sprites/SelectBG.png");
+        this.load.image("clb", "./sprites/ClearButton.png");
+        this.load.image("lb", "./sprites/LogoButton.png");
 
         this.load.image("c2", "./sprites/cardFronts/C2.png");
         this.load.image("c3", "./sprites/cardFronts/C3.png");
@@ -87,6 +90,6 @@ export class LoadScene extends Phaser.Scene{
 
     create() {
         this.add.text(1000, 600, "Loading...");
-        this.scene.start(CST.SCENES.MENU);
+        this.scene.start(CST.SCENES.GAME);
     }
 }
